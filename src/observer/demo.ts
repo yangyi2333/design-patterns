@@ -1,4 +1,5 @@
 // observer pattern
+
 interface IObserver {
   notify(...args: unknown[]):void
 }
@@ -6,7 +7,7 @@ interface IObserver {
 interface IObservable {
   subscribe(observer: IObserver): void;
   unsubscribe(observer: IObserver): void;
-  notify(...args: unknown[]):void
+  notifyObservers(...args: unknown[]):void
 }
 
 class Subject implements IObservable {
@@ -23,7 +24,7 @@ class Subject implements IObservable {
     this.observers.delete(observer);
   }
 
-  notify(...args: unknown[]) {
+  notifyObservers(...args: unknown[]) {
     this.observers.forEach(observer => {
       observer.notify(...args)
     })
@@ -40,4 +41,4 @@ const SUBJECT = new Subject();
 const OBSERVER1 = new Observer1();
 SUBJECT.subscribe(OBSERVER1);
 
-SUBJECT.notify('MSG',[1,2,3])
+SUBJECT.notifyObservers('MSG',[1,2,3])
